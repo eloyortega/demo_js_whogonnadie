@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>bootstrap</title>
+
+	<!--Required metatag and stylesheet-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<!--Custom styles here-->
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<!--Your HTML here-->
+	<nav class="navbar navbar-default affix-top">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+				<span class="glyphicon glyphicon-menu-hamburger"></span>
+			</button>
+			<a class="navbar-brand" href="#">Whose Gonna Die</a>
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="#breakdown">Breakdown</a></li>
+				<li><a href="#vote">Vote</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="jumbotron" id="hero">
+		<div>
+			<h1 class="text-center">Infinity War</h1>
+			<h2 class="text-center">Someone's gonna die!!!!</h2>
+		</div>
+	</div>
+	<div id="breakdown">
+		<div class="container">
+			<h3 class="text-center">The Breakdown</h3>
+			<p class="text-center" style="max-width:650px; margin:10px auto 30px ;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in ex diam. Suspendisse egestas vitae nisi eu scelerisque. Sed dignissim felis malesuada turpis volutpat, et mattis ipsum porta.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in ex diam. Suspendisse egestas vitae nisi eu scelerisque. Sed dignissim felis malesuada turpis volutpat, et mattis ipsum porta.</p>
+		</div>
+	</div>
+	<div id="avengers">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-8">
+					<h4>The Heroes</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in ex diam. Suspendisse egestas vitae nisi eu scelerisque. Sed dignissim felis malesuada turpis volutpat, et mattis ipsum porta.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="thanos">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-8">
+					<h4>The Baddie</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in ex diam. Suspendisse egestas vitae nisi eu scelerisque. Sed dignissim felis malesuada turpis volutpat, et mattis ipsum porta.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="vote">
+		<div class="container">
+			<h4 class="text-center">Cast your Vote</h4>
+			<div class="row">
+				<div class="col-sm-4 text-center" id="kh">
+					<div class="votepic">
+						<img src="img/xhawkeye.jpg" class="img-responsive img-circle " style="margin: 0 auto;">
+						<h5>72%</h5>
+					</div>
+
+					<h5>Hawkeye</h5>
+					<a href="#" class="btn btn-primary voter">Vote</a>
+				</div>
+				<div class="col-sm-4 text-center" id="kt">
+					<div class="votepic">
+						<img src="img/xthor.jpg" class="img-responsive img-circle" style="margin: 0 auto;">
+						<h5>10%</h5>
+					</div>
+
+					<h5>Thor</h5>
+					<a href="#" class="btn btn-primary voter">Vote</a>
+				</div>
+				<div class="col-sm-4 text-center" id="ki">
+					<div class="votepic">
+						<img src="img/xironman.jpg" class="img-responsive img-circle" style="margin: 0 auto;">
+						<h5>18%</h5>
+					</div>
+
+					<h5>Iron Man</h5>
+					<a href="#" class="btn btn-primary voter">Vote</a>
+				</div>
+			</div>
+			<h6 class="text-center">Total Votes: <span id="tv"></span></h6>
+		</div>
+	</div>
+
+	<!--Required scripts-->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<!--Custom script here-->
+	<script>
+		if (localStorage.getItem('hawk') == null) {
+			hawk = 0;
+		} else {
+			hawk = Number(localStorage.getItem('hawk'));
+		};
+		if (localStorage.getItem('thor') == null) {
+			thor = 0;
+		} else {
+			thor = Number(localStorage.getItem('thor'));
+		};
+		if (localStorage.getItem('iron') == null) {
+			iron = 0;
+		} else {
+			iron = Number(localStorage.getItem('iron'));
+		};
+
+		function votes() {
+			if (hawk == 0 && thor == 0 && iron == 0) {
+				vh = 0;
+				vt = 0;
+				vi = 0;
+			} else {
+				vh = ((hawk / (hawk + thor + iron)) * 100).toFixed(0);
+				vt = ((thor / (hawk + thor + iron)) * 100).toFixed(0);
+				vi = ((iron / (hawk + thor + iron)) * 100).toFixed(0);
+
+			};
+			document.querySelector('#kh > .votepic > h5').innerHTML = vh + "%";
+			document.querySelector('#kt > .votepic > h5').innerHTML = vt + "%";
+			document.querySelector('#ki > .votepic > h5').innerHTML = vi + "%";
+			document.getElementById('tv').innerHTML = " " + (hawk + thor + iron);
+		}
+
+		votes();
+
+		v = document.getElementsByClassName('voter')
+
+		for (i in v) {
+			v[i].onclick = function() {
+				avenger = this.parentElement.getAttribute('id');
+				if (avenger == "kh") {
+					++hawk;
+				} else if (avenger == "kt") {
+					++thor;
+				} else {
+					++iron;
+				}
+				localStorage.setItem('hawk', hawk);
+				localStorage.setItem('thor', thor);
+				localStorage.setItem('iron', iron);
+
+				votes();
+				return false;
+			};
+		}
+
+	</script>
+</body>
+
+</html>
